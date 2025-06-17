@@ -37,6 +37,24 @@
   padding: 2em;
 }
 
+.red-text {
+  color: rgba(204, 0, 0, 0.87);
+}
+
+.play-card {
+  border: 1px solid;
+  background-color: white;
+  border-radius: 0.4rem;
+  padding: 2rem;
+  height: 120px;
+}
+
+.button-section {
+  display: flex;
+  padding: 2rem 0;
+  gap: 0.4rem;
+}
+
 .read-the-docs {
   color: #888;
 }
