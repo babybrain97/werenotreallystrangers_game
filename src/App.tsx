@@ -2,9 +2,9 @@ import { useState } from 'react'
 import './App.css'
 
 function App() {
-  const [questionIndex, setQuestionIndex] = useState(0);
+  const [cardIndex, setcardIndex] = useState(0);
 
-  const questions = [{ type: "question", text: "Hello"
+  const cards = [{ type: "question", text: "Hello"
   }, { type: "question", text: "How are you really?"
 }, { type: "question", text: "What is your favourite memory?"
 }, { type: "question", text: "What is your favourite way to relax?"
@@ -12,18 +12,18 @@ function App() {
 }, { type: "wildcard", text: "Wildcard"
 }]
 
-const totalQuestions = questions.length;
+const totalCards = cards.length;
    
-  function nextQuesiton() {
-    return (questionIndex + 1) === totalQuestions ? setQuestionIndex(0) : setQuestionIndex(questionIndex + 1)
+  function nextCard() {
+    return (cardIndex + 1) === totalCards ? setcardIndex(0) : setcardIndex(cardIndex + 1)
   }
 
-  function previousQuestion() {
-    return questionIndex === 0 ? setQuestionIndex(totalQuestions - 1) : setQuestionIndex(questionIndex - 1)
+  function previousCard() {
+    return cardIndex === 0 ? setcardIndex(totalCards - 1) : setcardIndex(cardIndex - 1)
   }
 
-  function getRandomQuestionIndex(): number {
-  return Math.floor(Math.random() * (totalQuestions));
+  function getRandomCardIndex(): number {
+  return Math.floor(Math.random() * (totalCards));
 }
 
   return (
@@ -31,19 +31,19 @@ const totalQuestions = questions.length;
       <h1 className="title">We're not really strangers</h1>
       <p className="subtitle">Emotions might arise</p>
       <section className="wrapper">
-        {/* <p>{questionIndex+1} / {totalQuestions}</p> */}
-        <article className={(questions[questionIndex].type == 'question') ? "card" : "card card-red"}>
-          <h2 className="card-question">{questions[questionIndex].text}</h2>
+        {/* <p>{cardIndex+1} / {totalQuestions}</p> */}
+        <article className={(cards[cardIndex].type == 'question') ? "card" : "card card-red"}>
+          <h2 className="card-question">{cards[cardIndex].text}</h2>
           <p className="card-footer">We're not really strangers</p>
         </article>
 {/* 
           <div className="button-section">
-        <button onClick={() => previousQuestion()}>Previous</button>
-        <button onClick={() => setQuestionIndex(getRandomQuestionIndex())}>Random question</button>
-        <button onClick={() => nextQuesiton()}>Next</button>
+        <button onClick={() => previousCard()}>Previous</button>
+        <button onClick={() => setcardIndex(getRandomcardIndex())}>Random question</button>
+        <button onClick={() => nextCard()}>Next</button>
         </div> */}
 
-        <article className="card card-red" onClick={() => setQuestionIndex(getRandomQuestionIndex())}>
+        <article className="card card-red" onClick={() => setcardIndex(getRandomCardIndex())}>
           <h2 className="card-question">Level 1</h2>
           <p className="card-question">( perception )</p>
           <p className="card-footer">We're not really strangers</p>
