@@ -40,12 +40,6 @@ function App() {
     setDrawnCardsDeck([]);
   }
 
-  useEffect(() => {
-    console.log("current card", drawnCard);
-    console.log("remaining in deck", cardDeck);
-    console.log("past cards", drawnCardsDeck);
-  }, [drawCard, drawnCardsDeck, cardDeck]);
-
   return (
     <>
       <h1 className="title">We're not really strangers</h1>
