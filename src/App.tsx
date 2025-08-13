@@ -1,69 +1,89 @@
-import { useState } from 'react'
-import './App.css'
+import { useEffect, useState } from "react";
+import "./App.css";
+
+type Card = {
+  type: string;
+  text: string;
+};
 
 function App() {
-  const [cardIndex, setcardIndex] = useState(0);
+  const welcomeCard = { type: "question", text: "Hello" };
+  const cards = [
+    { type: "question", text: "How are you really?" },
+    { type: "question", text: "What is your favourite memory?" },
+    { type: "question", text: "What is your favourite way to relax?" },
+    { type: "question", text: "What is the latest book you have read?" },
+    { type: "wildcard", text: "Wildcard" },
+  ];
 
-  const cards = [{ type: "question", text: "Hello"
-  }, { type: "question", text: "How are you really?"
-}, { type: "question", text: "What is your favourite memory?"
-}, { type: "question", text: "What is your favourite way to relax?"
-},{ type: "question", text: "What is the latest book you have read?"
-}, { type: "wildcard", text: "Wildcard"
-}]
+  const [drawnCard, setDrawnCard] = useState<Card>(welcomeCard);
+  const [cardDeck, setCardDeck] = useState<Card[]>(cards);
+  const [drawnCardsDeck, setDrawnCardsDeck] = useState<Card[]>([]);
 
-const totalCards = cards.length;
-   
-  function nextCard() {
-    return (cardIndex + 1) === totalCards ? setcardIndex(0) : setcardIndex(cardIndex + 1)
-  }
-
-  function previousCard() {
-    return cardIndex === 0 ? setcardIndex(totalCards - 1) : setcardIndex(cardIndex - 1)
-  }
-
+  const totalCards = cardDeck.length;
   function getRandomCardIndex(): number {
-  return Math.floor(Math.random() * (totalCards));
-}
+    return Math.floor(Math.random() * totalCards);
+  }
+
+  function drawCard() {
+    const currentCard = cardDeck.splice(getRandomCardIndex(), 1)[0];
+    setDrawnCard(currentCard);
+    const updatedCardDeck = [...cardDeck];
+
+    setCardDeck(updatedCardDeck);
+    setDrawnCardsDeck([...drawnCardsDeck, currentCard]);
+  }
+
+  function startAgain() {
+    setDrawnCard(welcomeCard);
+    setCardDeck(cards);
+    setDrawnCardsDeck([]);
+  }
+
+  useEffect(() => {
+    console.log("current card", drawnCard);
+    console.log("remaining in deck", cardDeck);
+    console.log("past cards", drawnCardsDeck);
+  }, [drawCard, drawnCardsDeck, cardDeck]);
 
   return (
     <>
       <h1 className="title">We're not really strangers</h1>
       <p className="subtitle">Emotions might arise</p>
       <section className="wrapper">
-        {/* <p>{cardIndex+1} / {totalQuestions}</p> */}
-        <article className={(cards[cardIndex].type == 'question') ? "card" : "card card-red"}>
-          <h2 className="card-question">{cards[cardIndex].text}</h2>
-          <p className="card-footer">We're not really strangers</p>
-        </article>
-{/* 
-          <div className="button-section">
-        <button onClick={() => previousCard()}>Previous</button>
-        <button onClick={() => setcardIndex(getRandomcardIndex())}>Random question</button>
-        <button onClick={() => nextCard()}>Next</button>
-        </div> */}
-
-        <article className="card card-red" onClick={() => setcardIndex(getRandomCardIndex())}>
-          <h2 className="card-question">Level 1</h2>
-          <p className="card-question">( perception )</p>
-          <p className="card-footer">We're not really strangers</p>
-        </article>
-
-        {/* <article className="card card-red">
-          <h2 className="card-question">Level 2</h2>
-          <p className="card-question">( reflection )</p>
-          <p className="card-footer">We're not really strangers</p>
-        </article>
-
-        <article className="card card-red">
-          <h2 className="card-question">Level 3</h2>
-          <p className="card-question">( reflection )</p>
-          <p className="card-footer">We're not really strangers</p>
-        </article> */}
-
+        {cardDeck.length > 0 ? (
+          <>
+            <article
+              className={
+                drawnCard.type == "question" ? "card" : "card card-red"
+              }
+            >
+              <h2 className="card-question">{drawnCard.text}</h2>
+              <p className="card-footer">We're not really strangers</p>
+            </article>
+            <article className="card card-red" onClick={() => drawCard()}>
+              <h2 className="card-question">Level 1</h2>
+              <p className="card-question">( perception )</p>
+              <p className="card-footer">We're not really strangers</p>
+            </article>
+          </>
+        ) : (
+          <>
+            <article className="card" onClick={() => startAgain()}>
+              <h2 className="card-question">
+                That's it. How are you feeling now?
+              </h2>
+              <p className="card-question">
+                ( no more questions in the deck. click to start over )
+              </p>
+              <p className="card-footer">We're not really strangers</p>
+            </article>
+            <article className="card card-red"></article>
+          </>
+        )}
       </section>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

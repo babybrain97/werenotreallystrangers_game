@@ -28,7 +28,7 @@
 .title {
   font-weight: 700;
   text-transform: uppercase;
-  color: var(--red)
+  color: var(--red);
 }
 
 .subtitle {
@@ -44,7 +44,7 @@
   gap: 1.5rem;
   justify-content: space-between;
   justify-content: stretch;
-  max-width: 640px;;
+  max-width: 640px;
 }
 
 .card {
